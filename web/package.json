@@ -1,0 +1,17 @@
+{
+  "name": "ajo-arc",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Rotating savings circles (ajo) in USDC on Arc",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "engines": { "node": "22.x" },
+  "dependencies": {
+    "viem": "^2.38.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}

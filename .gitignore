@@ -1,0 +1,12 @@
+node_modules/
+web/public/app.js
+web/.vercel/
+.vercel/
+contracts/out/
+contracts/cache/
+contracts/broadcast/
+contracts/lib/
+.env
+.env.*
+*.key
+keys*.json

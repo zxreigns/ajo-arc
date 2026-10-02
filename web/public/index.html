@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ajo · savings circles in USDC on Arc</title>
+<meta name="description" content="Rotating savings circles (ajo, esusu, susu, chama) in USDC on Arc. Members hold only USDC, sign instead of paying gas, and the pot lands the moment the last share does.">
+<meta property="og:title" content="Ajo · savings circles in USDC on Arc">
+<meta property="og:description" content="Members hold only USDC, sign instead of paying gas, and the pot lands the moment the last share does.">
+<meta property="og:image" content="/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="/"><svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="16" cy="16" r="11" stroke-dasharray="3 4"/></g><g fill="currentColor"><circle cx="16" cy="5" r="3"/><circle cx="25.5" cy="21.5" r="3"/><circle cx="6.5" cy="21.5" r="3"/></g><circle cx="16" cy="16" r="4" fill="var(--accent)"/></svg><span>ajo</span></a>
+  <span class="net" id="netPill">Arc</span>
+  <button class="btn ghost" id="connectBtn">Connect wallet</button>
+</header>
+
+<main>
+<section class="hero">
+  <div>
+    <p class="eyebrow">Rotating savings circles · USDC · Arc</p>
+    <h1>Save together<br>in dollars.</h1>
+    <p class="lede">An <em>ajo</em> (esusu, susu, chama, tontine) is how millions of people save: everyone pays the same amount each round, and each round the whole pot goes to one member until everyone has had a turn. This one runs on Arc. Members hold <b>only USDC</b>, <b>sign instead of paying gas</b>, and the pot lands the moment the last share does.</p>
+    <div class="cta"><a class="btn" href="#demo">Watch a circle run</a><a class="btn ghost" href="#start">Start your own</a></div>
+  </div>
+  <ul class="facts">
+    <li><span class="k">Assets a member needs</span><span class="v">1 <small>USDC is the savings and the gas</small></span></li>
+    <li><span class="k">Gas a member pays</span><span class="v">0 <small>a relayer submits signatures, repaid <span id="feeFact">0.005</span> USDC</small></span></li>
+    <li><span class="k">Last share to payout</span><span class="v" id="finalityFact">1 tx <small>pot is paid in the same transaction</small></span></li>
+  </ul>
+</section>
+
+<section class="demo card" id="demo">
+  <div class="demo-head">
+    <div>
+      <h2>Live demo circle</h2>
+      <p class="muted">Ada, Bayo and Chidi hold nothing but USDC on <span class="netname">Arc</span>. Every click is a real transaction: the next member signs, our relayer submits, the chain settles. No wallet needed to try it.</p>
+    </div>
+    <div class="demo-id" id="demoId">circle —</div>
+  </div>
+  <div class="demo-body">
+    <div class="ring" id="ring">
+      <svg viewBox="0 0 300 300" class="ring-svg" aria-hidden="true"><circle cx="150" cy="150" r="112" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="4 7"/></svg>
+      <div class="pot"><span class="pot-label">pot</span><span class="pot-amt" id="potAmt">0.00</span><span class="pot-sub" id="potSub">USDC</span></div>
+      <div class="member m0" id="m0"></div><div class="member m1" id="m1"></div><div class="member m2" id="m2"></div>
+    </div>
+    <div class="demo-side">
+      <div class="status" id="demoStatus">Loading the circle from the chain…</div>
+      <button class="btn big" id="stepBtn" disabled>Next step</button>
+      <div class="result" id="stepResult" hidden></div>
+      <h3>Activity</h3>
+      <ol class="feed" id="feed"><li class="muted">Reading recent events…</li></ol>
+    </div>
+  </div>
+</section>
+
+<section class="how">
+  <h2>How a circle works</h2>
+  <ol class="steps">
+    <li><b>Organize.</b> Pick the amount, the number of members and the round length. Creating a circle is free for you; the relayer pays the gas.</li>
+    <li><b>Join with a signature.</b> Your wallet signs a USDC authorization (EIP-3009) for the security deposit plus a tiny relay fee. No gas, no second token, no approval transaction.</li>
+    <li><b>Contribute each round.</b> Same thing: sign, done. When the last member's share arrives, the contract pays the whole pot to that round's member in the same transaction.</li>
+    <li><b>Nobody stalls the circle.</b> After the deadline anyone can settle the round: a missing share is covered from that member's deposit and the pot still goes out. When the last round pays out, every deposit goes back automatically.</li>
+  </ol>
+</section>
+
+<section class="card" id="start">
+  <h2>Your circles</h2>
+  <p class="muted" id="walletNote">Connect a wallet (MetaMask, Rabby, Coinbase Wallet…) on <span class="netname">Arc</span> to organize or join a circle. You only need USDC.</p>
+  <div class="grid2">
+    <form id="createForm" class="panel">
+      <h3>Organize a circle</h3>
+      <label>Name<input name="name" maxlength="64" value="Friday ajo" required></label>
+      <div class="row">
+        <label>Each round (USDC)<input name="contribution" type="number" min="0.01" step="0.01" value="1" required></label>
+        <label>Members<input name="size" type="number" min="2" max="20" value="4" required></label>
+      </div>
+      <div class="row">
+        <label>Deposit (USDC)<input name="deposit" type="number" min="0" step="0.01" value="1"></label>
+        <label>Round length<select name="roundDuration"><option value="3600">1 hour</option><option value="86400">1 day</option><option value="604800" selected>1 week</option><option value="2592000">30 days</option></select></label>
+      </div>
+      <button class="btn" type="submit">Create circle (free)</button>
+      <div class="msg" id="createMsg"></div>
+    </form>
+    <form id="openForm" class="panel">
+      <h3>Open a circle</h3>
+      <label>Circle number<input name="id" type="number" min="1" placeholder="e.g. 3" required></label>
+      <button class="btn ghost" type="submit">Open</button>
+      <div id="circleView"></div>
+    </form>
+  </div>
+</section>
+
+<section class="card" id="record">
+  <h2>Savings record</h2>
+  <p class="muted">Every contribution builds an on-chain record: rounds paid, rounds missed, pots received, circles completed. It belongs to the member, not to a bank, and any lender or app can read it.</p>
+  <form id="recordForm" class="inline"><input name="addr" placeholder="0x… address" required><button class="btn ghost" type="submit">Look up</button></form>
+  <div id="recordOut"></div>
+</section>
+
+<section class="why">
+  <h2>Why this needs Arc</h2>
+  <div class="grid3">
+    <div><h3>One asset</h3><p>On other chains a saver needs a second, volatile token just to move their dollars. On Arc, USDC is the gas, so a member's balance is all they need, and a relayer can be repaid in the same asset from the signed amount.</p></div>
+    <div><h3>Fees you can quote</h3><p>Gas is priced in dollars with a smoothed base fee, so the 0.005 USDC relay fee covers a contribution today and next month. A circle's cost is known before anyone joins.</p></div>
+    <div><h3>Instant pots</h3><p>Sub-second finality means the member whose turn it is has spendable dollars the moment the last share lands, not after confirmations.</p></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p>Contract <a id="contractLink" href="#" target="_blank" rel="noopener">—</a> · <a href="https://github.com/zxreigns/ajo-arc" target="_blank" rel="noopener">Source on GitHub</a> · MIT</p>
+  <p class="muted">Prototype. Amounts in the demo are tiny on purpose. Not financial advice.</p>
+</footer>
+<script type="module" src="/app.js"></script>
+</body>
+</html>

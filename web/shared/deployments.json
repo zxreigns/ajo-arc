@@ -1,0 +1,10 @@
+{
+  "testnet": {
+    "chainId": 5042002,
+    "ajo": "0x2c92a5b906ca661bb7c17eded4c98d0e3ddbbe29",
+    "deployBlock": 65080609,
+    "deployTx": "0x824658c458dc7897f6845d9d7f9e5c8ce786c1c2ceab7cf6c894191d2d188fc3",
+    "deployer": "0x0EB58aC990baF66562C78A84A7834603189F0BEC",
+    "maxRelayFee": "50000"
+  }
+}
