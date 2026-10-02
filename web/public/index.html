@@ -1,121 +1,259 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ajo · savings circles in USDC on Arc</title>
-<meta name="description" content="Rotating savings circles (ajo, esusu, susu, chama) in USDC on Arc. Members hold only USDC, sign instead of paying gas, and the pot lands the moment the last share does.">
-<meta property="og:title" content="Ajo · savings circles in USDC on Arc">
-<meta property="og:description" content="Members hold only USDC, sign instead of paying gas, and the pot lands the moment the last share does.">
-<meta property="og:image" content="/og.png">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ajo · save together in dollars, on Arc</title>
+<meta name="description" content="Rotating savings circles (ajo, esusu, susu, chama) in USDC on Arc. Members hold only USDC, sign instead of paying gas, and the pot pays out the instant the last share lands.">
+<meta name="theme-color" content="#0a0d1f" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f5efe3" media="(prefers-color-scheme: light)">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ajo · save together in dollars">
+<meta property="og:description" content="The rotating savings circle, rebuilt on Arc. Only USDC, no gas, and the pot pays out in under a second.">
+<meta property="og:image" content="https://ajo-arc.vercel.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ajo-arc.vercel.app/og.png">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/InstrumentSerif.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/Geist.woff2" as="font" type="font/woff2" crossorigin>
+<script>try{var t=localStorage.getItem("ajo-theme");if(t)document.documentElement.dataset.theme=t;else if(matchMedia("(prefers-color-scheme: light)").matches)document.documentElement.dataset.theme="light"}catch(e){}</script>
 <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<header class="top">
-  <a class="brand" href="/"><svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="16" cy="16" r="11" stroke-dasharray="3 4"/></g><g fill="currentColor"><circle cx="16" cy="5" r="3"/><circle cx="25.5" cy="21.5" r="3"/><circle cx="6.5" cy="21.5" r="3"/></g><circle cx="16" cy="16" r="4" fill="var(--accent)"/></svg><span>ajo</span></a>
-  <span class="net" id="netPill">Arc</span>
-  <button class="btn ghost" id="connectBtn">Connect wallet</button>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="brand" href="/" aria-label="Ajo home">
+      <svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="13" fill="none" stroke="currentColor" stroke-opacity=".35" stroke-width="1.5"/><g fill="currentColor"><circle cx="20" cy="7" r="3.2"/><circle cx="31.3" cy="13.5" r="3.2"/><circle cx="31.3" cy="26.5" r="3.2"/><circle cx="20" cy="33" r="3.2"/><circle cx="8.7" cy="26.5" r="3.2"/></g><circle cx="8.7" cy="13.5" r="3.6" fill="var(--gold)"/><circle cx="20" cy="20" r="5" fill="var(--gold)"/></svg>
+      <span>Ajo</span>
+    </a>
+    <nav class="links" aria-label="Sections">
+      <a href="#how">How it works</a><a href="#why">Why Arc</a><a href="#passport">Passport</a><a href="#start">Start a circle</a>
+    </nav>
+    <div class="nav-r">
+      <span class="net" id="netPill" title="Network"><span class="pulse"></span><span id="netName">Arc</span></span>
+      <button class="icon-btn" id="themeBtn" aria-label="Switch light or dark theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="sun" d="M12 4V2m0 20v-2m8-8h2M2 12h2m13.66-5.66 1.41-1.41M4.93 19.07l1.41-1.41m0-11.32L4.93 4.93m14.14 14.14-1.41-1.41M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z"/><path class="moon" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg></button>
+      <button class="btn sm ghost" id="connectBtn"><span>Connect wallet</span></button>
+    </div>
+  </div>
 </header>
 
-<main>
+<main id="main">
 <section class="hero">
-  <div>
-    <p class="eyebrow">Rotating savings circles · USDC · Arc</p>
-    <h1>Save together<br>in dollars.</h1>
-    <p class="lede">An <em>ajo</em> (esusu, susu, chama, tontine) is how millions of people save: everyone pays the same amount each round, and each round the whole pot goes to one member until everyone has had a turn. This one runs on Arc. Members hold <b>only USDC</b>, <b>sign instead of paying gas</b>, and the pot lands the moment the last share does.</p>
-    <div class="cta"><a class="btn" href="#demo">Watch a circle run</a><a class="btn ghost" href="#start">Start your own</a></div>
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-in">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="live-dot"></span><span id="eyebrowNet">Live on Arc</span><span class="sep"></span><span class="nm-inline">ajo · esusu · susu · chama</span></p>
+      <h1>Save <em>together</em><br>in dollars.</h1>
+      <p class="lede">The rotating savings circle millions already trust, rebuilt on Arc. Members hold <b>only USDC</b>, sign instead of paying gas, and the pot pays out <b>the instant the last share lands</b>.</p>
+      <ul class="stats" aria-label="Key numbers">
+        <li><span class="sv" id="statGas">$0</span><span class="sk">gas paid by members</span></li>
+        <li><span class="sv"><span id="statFinal">0.8</span><small>s</small></span><span class="sk" id="statFinalK">last share to payout, measured</span></li>
+        <li><span class="sv">1</span><span class="sk">asset to hold: USDC</span></li>
+      </ul>
+      <div class="cta">
+        <a class="btn primary" href="#start">Start a circle <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4-4 4 4-4 4"/></svg></a>
+        <a class="btn ghost" href="#how">How it works</a>
+      </div>
+    </div>
+
+    <div class="stage" id="demo" aria-label="Live demo circle">
+      <div class="stage-glow" aria-hidden="true"></div>
+      <div class="stage-head">
+        <div>
+          <span class="kicker">Live demo circle</span>
+          <b id="cTitle">Ada, Bayo &amp; Chidi</b>
+        </div>
+        <a class="chip" id="cLink" href="#" target="_blank" rel="noopener"><span id="cId">circle —</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3h7v7M13 3 4 12"/></svg></a>
+      </div>
+      <div class="ring-wrap">
+        <svg class="ring" id="ring" viewBox="0 0 400 400" role="img" aria-label="Members around the circle and the pot in the middle"></svg>
+        <div class="pot" id="pot">
+          <span class="pot-k" id="potK">pot</span>
+          <span class="pot-v" id="potV">0.00</span>
+          <span class="pot-s" id="potS">USDC</span>
+        </div>
+      </div>
+      <p class="stage-status" id="stStatus"><span class="skel w60"></span></p>
+      <div class="controls">
+        <button class="btn primary big" id="stepBtn" disabled><span class="b-label">Loading the circle…</span><span class="b-sub" id="stepSub">reading Arc</span></button>
+        <button class="btn ghost play" id="playBtn" disabled aria-label="Play round: auto-play to the next payout"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 4.5v11l9-5.5z"/></svg><span>Play round</span></button>
+      </div>
+      <div class="timer" id="timer" aria-live="polite">
+        <span class="t-phase" id="tPhase">No wallet needed. Every click is a real transaction on Arc.</span>
+        <span class="t-ms" id="tMs"></span>
+      </div>
+      <div class="feed-head"><span>On-chain activity</span><a id="feedAll" href="#" target="_blank" rel="noopener">explorer</a></div>
+      <ol class="receipts" id="receipts"><li class="r skel-row"></li><li class="r skel-row"></li></ol>
+    </div>
   </div>
-  <ul class="facts">
-    <li><span class="k">Assets a member needs</span><span class="v">1 <small>USDC is the savings and the gas</small></span></li>
-    <li><span class="k">Gas a member pays</span><span class="v">0 <small>a relayer submits signatures, repaid <span id="feeFact">0.005</span> USDC</small></span></li>
-    <li><span class="k">Last share to payout</span><span class="v" id="finalityFact">1 tx <small>pot is paid in the same transaction</small></span></li>
-  </ul>
 </section>
 
-<section class="demo card" id="demo">
-  <div class="demo-head">
-    <div>
-      <h2>Live demo circle</h2>
-      <p class="muted">Ada, Bayo and Chidi hold nothing but USDC on <span class="netname">Arc</span>. Every click is a real transaction: the next member signs, our relayer submits, the chain settles. No wallet needed to try it.</p>
-    </div>
-    <div class="demo-id" id="demoId">circle —</div>
-  </div>
-  <div class="demo-body">
-    <div class="ring" id="ring">
-      <svg viewBox="0 0 300 300" class="ring-svg" aria-hidden="true"><circle cx="150" cy="150" r="112" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="4 7"/></svg>
-      <div class="pot"><span class="pot-label">pot</span><span class="pot-amt" id="potAmt">0.00</span><span class="pot-sub" id="potSub">USDC</span></div>
-      <div class="member m0" id="m0"></div><div class="member m1" id="m1"></div><div class="member m2" id="m2"></div>
-    </div>
-    <div class="demo-side">
-      <div class="status" id="demoStatus">Loading the circle from the chain…</div>
-      <button class="btn big" id="stepBtn" disabled>Next step</button>
-      <div class="result" id="stepResult" hidden></div>
-      <h3>Activity</h3>
-      <ol class="feed" id="feed"><li class="muted">Reading recent events…</li></ol>
-    </div>
-  </div>
+<section class="names" aria-label="The same circle, many names">
+  <div class="marquee"><div class="track" id="namesTrack">
+    <span>Ajo <i>Nigeria</i></span><span>Esusu <i>Yoruba</i></span><span>Susu <i>Ghana &amp; the Caribbean</i></span><span>Chama <i>Kenya</i></span><span>Tontine <i>Cameroon</i></span><span>Stokvel <i>South Africa</i></span><span>Gam'eya <i>Egypt</i></span><span>Tanda <i>Mexico</i></span><span>Hui <i>China &amp; Vietnam</i></span><span>Paluwagan <i>Philippines</i></span><span>Arisan <i>Indonesia</i></span><span>Kye <i>Korea</i></span>
+  </div></div>
+  <p class="names-cap">One idea, many names, on every continent. Ajo keeps the ritual and fixes what breaks it: the late member, the organizer holding the cash, the savings losing value while they wait.</p>
 </section>
 
-<section class="how">
-  <h2>How a circle works</h2>
+<section class="sec how" id="how">
+  <header class="sec-head">
+    <span class="kicker">How a circle works</span>
+    <h2>Four moves. <em>Zero gas.</em></h2>
+  </header>
   <ol class="steps">
-    <li><b>Organize.</b> Pick the amount, the number of members and the round length. Creating a circle is free for you; the relayer pays the gas.</li>
-    <li><b>Join with a signature.</b> Your wallet signs a USDC authorization (EIP-3009) for the security deposit plus a tiny relay fee. No gas, no second token, no approval transaction.</li>
-    <li><b>Contribute each round.</b> Same thing: sign, done. When the last member's share arrives, the contract pays the whole pot to that round's member in the same transaction.</li>
-    <li><b>Nobody stalls the circle.</b> After the deadline anyone can settle the round: a missing share is covered from that member's deposit and the pot still goes out. When the last round pays out, every deposit goes back automatically.</li>
+    <li>
+      <div class="step-ic"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="15" class="s1"/><circle cx="24" cy="9" r="4"/><circle cx="37" cy="31.5" r="4"/><circle cx="11" cy="31.5" r="4"/></svg></div>
+      <span class="n">01</span><h3>Organize</h3>
+      <p>Pick the amount, the members and the round length. Creating a circle is free; the relayer pays the gas.</p>
+    </li>
+    <li>
+      <div class="step-ic"><svg viewBox="0 0 48 48" aria-hidden="true"><path class="s1" d="M10 34c6-2 8-14 14-14s5 10 9 10 4-6 5-8"/><path d="M8 40h32"/></svg></div>
+      <span class="n">02</span><h3>Join with a signature</h3>
+      <p>Your wallet signs a USDC authorization for the deposit plus a tiny fee. No gas token, no approval transaction.</p>
+    </li>
+    <li>
+      <div class="step-ic"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="14" class="s1"/><path d="M24 10v14l9 6"/></svg></div>
+      <span class="n">03</span><h3>Pay each round</h3>
+      <p>Sign, done. When the last share arrives, the same transaction pays the whole pot to that round's member.</p>
+    </li>
+    <li>
+      <div class="step-ic"><svg viewBox="0 0 48 48" aria-hidden="true"><path class="s1" d="M24 6 39 12v11c0 9-6.5 16-15 19C15.5 39 9 32 9 23V12z"/><path d="m17 24 5 5 9-10"/></svg></div>
+      <span class="n">04</span><h3>Nobody stalls it</h3>
+      <p>Miss a deadline and anyone can settle: your share comes from your deposit and the pot still goes out. Deposits return at the end.</p>
+    </li>
   </ol>
 </section>
 
-<section class="card" id="start">
-  <h2>Your circles</h2>
-  <p class="muted" id="walletNote">Connect a wallet (MetaMask, Rabby, Coinbase Wallet…) on <span class="netname">Arc</span> to organize or join a circle. You only need USDC.</p>
-  <div class="grid2">
-    <form id="createForm" class="panel">
-      <h3>Organize a circle</h3>
-      <label>Name<input name="name" maxlength="64" value="Friday ajo" required></label>
-      <div class="row">
-        <label>Each round (USDC)<input name="contribution" type="number" min="0.01" step="0.01" value="1" required></label>
-        <label>Members<input name="size" type="number" min="2" max="20" value="4" required></label>
+<section class="sec why" id="why">
+  <header class="sec-head">
+    <span class="kicker">Why it has to be Arc</span>
+    <h2>Dollars that are <em>also the gas.</em></h2>
+    <p class="sec-lede">On Arc, USDC pays for the network. So a member's dollars are all they ever need, and the relayer can be repaid in the same dollars, out of the amount they signed.</p>
+  </header>
+  <div class="compare">
+    <div class="col elsewhere">
+      <span class="col-k">Paying into a circle elsewhere</span>
+      <ol>
+        <li><span>1</span>Buy a separate gas token</li>
+        <li><span>2</span>Approve USDC (a transaction)</li>
+        <li><span>3</span>Send the contribution (another one)</li>
+        <li><span>4</span>Wait for confirmations</li>
+      </ol>
+      <p class="col-foot">Two volatile assets, two transactions, an anxious wait.</p>
+    </div>
+    <div class="col arc">
+      <span class="col-k">Paying into an Ajo circle on Arc</span>
+      <ol>
+        <li><span>1</span>Sign once. That's it.</li>
+      </ol>
+      <div class="sig-art" aria-hidden="true">
+        <svg viewBox="0 0 320 80"><path class="sig" d="M10 55c20-30 30-40 40-30s-8 28 4 28 18-34 30-34-6 30 8 30 20-22 32-22 4 18 16 18 22-26 36-26 2 22 16 22 24-14 34-14 10 10 22 10 18-8 40-8"/></svg>
       </div>
-      <div class="row">
-        <label>Deposit (USDC)<input name="deposit" type="number" min="0" step="0.01" value="1"></label>
-        <label>Round length<select name="roundDuration"><option value="3600">1 hour</option><option value="86400">1 day</option><option value="604800" selected>1 week</option><option value="2592000">30 days</option></select></label>
-      </div>
-      <button class="btn" type="submit">Create circle (free)</button>
-      <div class="msg" id="createMsg"></div>
-    </form>
-    <form id="openForm" class="panel">
-      <h3>Open a circle</h3>
-      <label>Circle number<input name="id" type="number" min="1" placeholder="e.g. 3" required></label>
-      <button class="btn ghost" type="submit">Open</button>
-      <div id="circleView"></div>
-    </form>
+      <p class="col-foot">The relayer submits it, keeps a <b><span class="feeV">0.005</span> USDC</b> fee from the signed amount (the contract caps it at 0.05), and the pot pays out in the same transaction.</p>
+    </div>
+  </div>
+  <div class="metrics">
+    <div class="metric"><span class="mv">~0.004</span><span class="mu">USDC</span><span class="mk">network cost of a contribution, paid by the relayer</span></div>
+    <div class="metric"><span class="mv">&lt;1</span><span class="mu">s</span><span class="mk">from the last share to a spendable pot</span></div>
+    <div class="metric"><span class="mv">0</span><span class="mu">tokens</span><span class="mk">besides USDC a member ever touches</span></div>
   </div>
 </section>
 
-<section class="card" id="record">
-  <h2>Savings record</h2>
-  <p class="muted">Every contribution builds an on-chain record: rounds paid, rounds missed, pots received, circles completed. It belongs to the member, not to a bank, and any lender or app can read it.</p>
-  <form id="recordForm" class="inline"><input name="addr" placeholder="0x… address" required><button class="btn ghost" type="submit">Look up</button></form>
-  <div id="recordOut"></div>
+<section class="sec passport-sec" id="passport">
+  <div class="pp-grid">
+    <div class="pp-copy">
+      <span class="kicker">Savings passport</span>
+      <h2>Every share you pay <em>is a stamp.</em></h2>
+      <p class="sec-lede">The contract keeps a record for every member: rounds paid, rounds missed, pots received, circles completed. It belongs to the saver, not a bank, and any lender or app can read it. A credit history for people banks ignore.</p>
+      <form class="lookup" id="recordForm" autocomplete="off">
+        <input name="addr" id="recordAddr" placeholder="Look up any 0x… address" spellcheck="false" aria-label="Address">
+        <button class="btn primary sm" type="submit">Look up</button>
+      </form>
+      <div class="quick" id="ppQuick" aria-label="Try a demo member"></div>
+      <p class="msg" id="recordMsg" role="status"></p>
+    </div>
+    <div class="pp-stage">
+      <article class="passport" id="passportCard" aria-live="polite">
+        <div class="pp-guilloche" aria-hidden="true"></div>
+        <div class="pp-sheen" aria-hidden="true"></div>
+        <header class="pp-head"><span>AJO · SAVINGS PASSPORT</span><span id="ppNet">ARC</span></header>
+        <div class="pp-body">
+          <div class="pp-photo" id="ppPhoto"></div>
+          <div class="pp-fields">
+            <div><label>Holder</label><b id="ppName">—</b></div>
+            <div><label>Address</label><span class="mono" id="ppAddr">—</span></div>
+            <div><label>Standing</label><b class="tier" id="ppTier">—</b></div>
+          </div>
+          <div class="pp-score" id="ppScore"></div>
+        </div>
+        <div class="pp-stats">
+          <div><b id="ppPaid">–</b><span>rounds paid</span></div>
+          <div><b id="ppMissed">–</b><span>missed</span></div>
+          <div><b id="ppRecv">–</b><span>pots received</span></div>
+          <div><b id="ppDone">–</b><span>circles done</span></div>
+        </div>
+        <div class="pp-stamps" id="ppStamps"></div>
+        <footer class="pp-mrz mono" id="ppMrz">P&lt;ARC&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;
+&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</footer>
+      </article>
+    </div>
+  </div>
 </section>
 
-<section class="why">
-  <h2>Why this needs Arc</h2>
-  <div class="grid3">
-    <div><h3>One asset</h3><p>On other chains a saver needs a second, volatile token just to move their dollars. On Arc, USDC is the gas, so a member's balance is all they need, and a relayer can be repaid in the same asset from the signed amount.</p></div>
-    <div><h3>Fees you can quote</h3><p>Gas is priced in dollars with a smoothed base fee, so the 0.005 USDC relay fee covers a contribution today and next month. A circle's cost is known before anyone joins.</p></div>
-    <div><h3>Instant pots</h3><p>Sub-second finality means the member whose turn it is has spendable dollars the moment the last share lands, not after confirmations.</p></div>
+<section class="sec app" id="start">
+  <header class="sec-head">
+    <span class="kicker">Your circles</span>
+    <h2>Start one in <em>a minute.</em></h2>
+    <p class="sec-lede" id="walletNote">Organizing is free and needs no wallet. To join or pay, connect any browser wallet on <span class="netname">Arc</span>. You only need USDC.</p>
+  </header>
+  <div class="app-grid">
+    <form id="createForm" class="panel" autocomplete="off">
+      <h3>Organize a circle</h3>
+      <label class="f"><span>Name</span><input name="name" maxlength="64" value="Friday ajo" required></label>
+      <div class="row">
+        <label class="f"><span>Each round</span><span class="affix"><input name="contribution" type="number" inputmode="decimal" min="0.01" step="0.01" value="10" required><i>USDC</i></span></label>
+        <label class="f"><span>Members</span><span class="stepper"><button type="button" data-d="-1" aria-label="Fewer members">−</button><input name="size" type="number" inputmode="numeric" min="2" max="20" value="5" required><button type="button" data-d="1" aria-label="More members">+</button></span></label>
+      </div>
+      <div class="row">
+        <label class="f"><span>Security deposit</span><span class="affix"><input name="deposit" type="number" inputmode="decimal" min="0" step="0.01" value="10"><i>USDC</i></span></label>
+        <label class="f"><span>Round length</span><select name="roundDuration"><option value="3600">1 hour</option><option value="86400">1 day</option><option value="604800" selected>1 week</option><option value="2592000">30 days</option></select></label>
+      </div>
+      <div class="summary" id="summary"></div>
+      <button class="btn primary full" type="submit" id="createBtn">Create circle <span class="free">free</span></button>
+      <div class="msg" id="createMsg" role="status"></div>
+    </form>
+    <div class="panel open-panel">
+      <h3>Open a circle</h3>
+      <form id="openForm" class="lookup" autocomplete="off">
+        <input name="id" type="number" inputmode="numeric" min="1" placeholder="Circle number, e.g. 3" required aria-label="Circle number">
+        <button class="btn ghost sm" type="submit">Open</button>
+      </form>
+      <div id="circleView" class="cv-wrap">
+        <div class="empty">
+          <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="38" class="e1"/><circle cx="60" cy="22" r="7"/><circle cx="93" cy="79" r="7" class="e2"/><circle cx="27" cy="79" r="7" class="e2"/><circle cx="60" cy="60" r="10" class="e3"/></svg>
+          <p>Got a link from a friend? It opens here. Or create a circle and share yours.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 </main>
 
-<footer>
-  <p>Contract <a id="contractLink" href="#" target="_blank" rel="noopener">—</a> · <a href="https://github.com/zxreigns/ajo-arc" target="_blank" rel="noopener">Source on GitHub</a> · MIT</p>
-  <p class="muted">Prototype. Amounts in the demo are tiny on purpose. Not financial advice.</p>
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-brand"><svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="13" fill="none" stroke="currentColor" stroke-opacity=".35" stroke-width="1.5"/><g fill="currentColor"><circle cx="20" cy="7" r="3.2"/><circle cx="31.3" cy="13.5" r="3.2"/><circle cx="31.3" cy="26.5" r="3.2"/><circle cx="20" cy="33" r="3.2"/><circle cx="8.7" cy="26.5" r="3.2"/></g><circle cx="8.7" cy="13.5" r="3.6" fill="var(--gold)"/><circle cx="20" cy="20" r="5" fill="var(--gold)"/></svg><span>Ajo</span><p>Save together in dollars.</p></div>
+    <div class="foot-links">
+      <span>Contract <a id="contractLink" class="mono" href="#" target="_blank" rel="noopener">—</a></span>
+      <a href="https://github.com/zxreigns/ajo-arc" target="_blank" rel="noopener">Source on GitHub</a>
+      <span>MIT</span>
+    </div>
+    <p class="foot-note">A prototype on <span class="netname">Arc</span>. Demo amounts are tiny on purpose. Not audited, not financial advice.</p>
+  </div>
 </footer>
-<script type="module" src="/app.js"></script>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script type="module" src="/js/main.js"></script>
 </body>
 </html>

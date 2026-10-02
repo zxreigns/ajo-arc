@@ -1,5 +1,6 @@
 node_modules/
 web/public/app.js
+web/public/js/
 web/.vercel/
 .vercel/
 contracts/out/

@@ -13,11 +13,15 @@ const DEPOSIT = BigInt(process.env.DEMO_DEPOSIT || "100000"); // 0.10 USDC
 const TOPUP = BigInt(process.env.DEMO_TOPUP || "300000"); // 0.30 USDC
 const ROUND = 3600n;
 
+export function demoMembers() {
+  return members().map((m) => ({ name: m.name, address: m.account.address }));
+}
+
 function members() {
   return (process.env.DEMO_KEYS || "").split(",").filter(Boolean).map((k, i) => ({ name: NAMES[i], account: privateKeyToAccount(k.trim()) }));
 }
 
-async function findDemoCircle() {
+export async function findDemoCircle() {
   const count = Number(await pub.readContract({ address: net.ajo, abi: ajoAbi, functionName: "circleCount" }));
   const me = relayer().account.address.toLowerCase();
   for (let id = count; id >= 1 && id > count - 40; id--) {
@@ -59,7 +63,7 @@ export default async function handler(req, res) {
     }
     if (req.method !== "POST") return json(res, 405, { error: "POST only" });
     const ip = (req.headers["x-forwarded-for"] || "").split(",")[0] || "anon";
-    if (limited(ip, 10) || limited("all", 40)) return json(res, 429, { error: "The demo is busy, try again in a few seconds." });
+    if (limited(`demo:${ip}`, 10) || limited("demo:all", 40)) return json(res, 429, { error: "The demo is busy, try again in a few seconds." });
 
     const d = await findDemoCircle();
     if (!d || d.c.status === 2) {

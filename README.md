@@ -2,6 +2,8 @@
 
 **Live:** https://ajo-arc.vercel.app (Arc Testnet today; mainnet deployment below once live)
 
+![The live demo circle: members on a ring, the pot paying out on Arc](docs/hero.jpg)
+
 An *ajo* (also called esusu, susu, chama, tontine, tanda) is how millions of people save without a bank: a group agrees on an amount, everyone pays it every round, and each round the whole pot goes to one member until everyone has had a turn. It works because people trust each other. It breaks when someone is late, when the organizer holds the cash, or when the money loses value while it waits.
 
 Ajo puts the circle on Arc:
@@ -14,9 +16,15 @@ Ajo puts the circle on Arc:
 
 ## Try it
 
-Open the site and press **Next step** on the live demo circle. Three demo members (Ada, Bayo and Chidi) hold nothing but USDC. Each click signs the next member's authorization on the server and the relayer submits it on Arc, exactly the path a real member's wallet signature takes. The result shows the transaction, the time to a final receipt and the gas the relayer paid.
+The live demo circle is the homepage. Three demo members (Ada, Bayo and Chidi) sit on a ring around the pot and hold nothing but USDC. Press the button: the next member's authorization is signed on the server and the relayer submits it on Arc, exactly the path a real member's wallet signature takes. A stopwatch runs until the transaction is final, a coin drops into the pot, and when the last share of a round lands the pot streams to that round's member. Each step leaves a receipt with the time from submit to final receipt, the gas the relayer paid and an explorer link. **Play round** runs straight through to the next payout.
 
-With a browser wallet on Arc you can also organize a circle (free, the relayer pays the gas), share its link, join by signature and pay each round by signature.
+With a browser wallet on Arc you can also organize a circle (free, the relayer pays the gas), share its invite link, join by signature and pay each round by signature.
+
+| Savings passport | On a phone | Light theme |
+| --- | --- | --- |
+| ![Savings passport](docs/passport.jpg) | ![Mobile](docs/mobile.jpg) | ![Light theme](docs/light.jpg) |
+
+**Savings passport.** Any address's on-chain record (rounds paid, rounds missed, pots received, circles completed) is rendered as a passport page with an on-time score, a stamp per completed circle and pot, and a machine-readable line.
 
 ## Deployments
 
@@ -85,8 +93,10 @@ cd contracts && forge install foundry-rs/forge-std --no-git && forge test
 ```
 contracts/        Foundry project: Ajo.sol + tests
 web/
-  public/         static site (index.html, style.css)
-  src/main.js     browser app (viem), bundled to public/app.js at build time
+  public/         static site (index.html, style.css, self-hosted fonts, og.png)
+  src/main.js     the page: live ring, receipts, passport, circle builder (no wallet library)
+  src/wallet.js   wallet actions with viem, split into its own chunk and loaded on first use
+  api/state.js    read-only chain state for the page (demo circle + events, any circle, savings records)
   api/relay.js    gasless relayer: create, join and contribute by signature
   api/demo.js     the one-click demo circle (Ada, Bayo, Chidi)
   shared/         ABI and Arc network constants
@@ -101,10 +111,14 @@ cd web && npm install
 DEPLOYER_KEYFILE=/secure/keys.json NETWORK=testnet node scripts/deploy.mjs
 # set the address in shared/config.js, then on Vercel set:
 #   NETWORK=testnet|mainnet, RELAYER_KEY=0x..., DEMO_KEYS=0xada,0xbayo,0xchidi
-NETWORK=testnet npm run build
+NETWORK=testnet npm run build   # writes public/js/
 ```
 
 Testnet USDC for gas comes from https://faucet.circle.com (Arc Testnet).
+
+## Fast on the phones savers use
+
+The page reads chain state through `/api/state`, so the first view ships about 12 KB of compressed JavaScript and no wallet library; viem loads only when someone connects a wallet. Fonts are self-hosted, motion respects `prefers-reduced-motion`, and the layout has dark and light themes. Lighthouse (mobile, throttled) on the live site: performance 99, accessibility 96, best practices 100, SEO 100.
 
 ## Limits of this prototype
 

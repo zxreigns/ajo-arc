@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   if (req.method === "GET") return json(res, 200, { network: net.name, ajo: net.ajo, relayFee: RELAY_FEE.toString() });
   if (req.method !== "POST") return json(res, 405, { error: "POST only" });
   const ip = (req.headers["x-forwarded-for"] || "").split(",")[0] || "anon";
-  if (limited(ip, 12)) return json(res, 429, { error: "Too many requests, try again in a minute." });
+  if (limited(`relay:${ip}`, 12)) return json(res, 429, { error: "Too many requests, try again in a minute." });
   const b = await readBody(req);
   try {
     if (b.action === "create") {
