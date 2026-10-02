@@ -6,5 +6,13 @@
     "deployTx": "0x824658c458dc7897f6845d9d7f9e5c8ce786c1c2ceab7cf6c894191d2d188fc3",
     "deployer": "0x0EB58aC990baF66562C78A84A7834603189F0BEC",
     "maxRelayFee": "50000"
+  },
+  "mainnet": {
+    "chainId": 5042,
+    "ajo": "0x155693f3b34feeb510979eb31380102f735cabcf",
+    "deployBlock": 23855745,
+    "deployTx": "0x2090485382914563f05ca10e3609d0f17141bf50f1b3ad3b6751cd2acd622776",
+    "deployer": "0x0EB58aC990baF66562C78A84A7834603189F0BEC",
+    "maxRelayFee": "50000"
   }
 }

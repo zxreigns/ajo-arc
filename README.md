@@ -1,6 +1,6 @@
 # Ajo · savings circles in USDC on Arc
 
-**Live:** https://ajo-arc.vercel.app (Arc Testnet today; mainnet deployment below once live)
+**Live on Arc Mainnet:** https://ajo-arc.vercel.app · contract [`0x155693f3b34feeb510979eb31380102f735cabcf`](https://explorer.arc.io/address/0x155693f3b34feeb510979eb31380102f735cabcf) (source verified on [Sourcify](https://repo.sourcify.dev/5042/0x155693f3b34feeb510979eb31380102f735cabcf))
 
 ![The live demo circle: members on a ring, the pot paying out on Arc](docs/hero.jpg)
 
@@ -31,9 +31,15 @@ With a browser wallet on Arc you can also organize a circle (free, the relayer p
 | Network | Ajo contract | Explorer |
 | --- | --- | --- |
 | Arc Testnet (5042002) | `0x2c92a5b906ca661bb7c17eded4c98d0e3ddbbe29` | [view](https://explorer.testnet.arc.io/address/0x2c92a5b906ca661bb7c17eded4c98d0e3ddbbe29) |
-| Arc Mainnet (5042) | pending | |
+| **Arc Mainnet (5042)** | `0x155693f3b34feeb510979eb31380102f735cabcf` | [view](https://explorer.arc.io/address/0x155693f3b34feeb510979eb31380102f735cabcf) · [deploy tx](https://explorer.arc.io/tx/0x2090485382914563f05ca10e3609d0f17141bf50f1b3ad3b6751cd2acd622776) · [verified source](https://repo.sourcify.dev/5042/0x155693f3b34feeb510979eb31380102f735cabcf) |
 
 USDC on both: `0x3600000000000000000000000000000000000000` (the ERC-20 interface of Arc's native USDC, 6 decimals).
+
+## Live on Arc Mainnet (Oct 2, 2026)
+
+The site runs on Arc Mainnet with real USDC. The first full demo circle on mainnet (create, 3 gasless joins, 9 gasless contributions, 3 payouts, deposits returned automatically) ran through the live site's `/api/demo`: every timed action took 0.5 to 1.4 s from submit to final receipt (median 0.9 s), 0.0032 to 0.0051 USDC of gas each, paid by the relayer. The demo members never held anything but USDC. Last payout of that circle: [0x67a6cd57…](https://explorer.arc.io/tx/0x67a6cd5712fb60d8e3809c12b21b6422aae53041f0878efb1d6383d3bac268e3).
+
+On mainnet the public demo circle uses 0.02 USDC a round and a 0.02 USDC deposit (`DEMO_CONTRIBUTION`, `DEMO_DEPOSIT`) so anyone can keep pressing the button; real circles set any amount.
 
 ## Measured on Arc Testnet (Oct 2, 2026)
 
@@ -45,7 +51,7 @@ A full three-member circle (create, 3 gasless joins, 9 gasless contributions, 3 
 | Gasless join (deposit) | ~0.0039 to 0.0043 | 0.8 to 1.4 s |
 | Gasless contribution | ~0.0032 to 0.0040 | 0.6 to 1.4 s |
 | Last contribution + pot payout | ~0.0038 to 0.0051 | 0.6 to 1.2 s |
-| Contract deployment | 0.042 | ~4 s |
+| Contract deployment | 0.042 (mainnet: 0.042, 0.96 s) | ~4 s |
 
 The wall times include simulation, gas estimation and receipt polling from a single server, so the chain's own finality is a fraction of them. The relay fee is 0.005 USDC per signed action, which covers the gas with room to spare; the contract caps it at 0.05 USDC (`maxRelayFee`) so a relayer can never take more than that from a signature.
 

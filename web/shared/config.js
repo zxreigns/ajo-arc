@@ -15,7 +15,7 @@ export const NETWORKS = {
     chainId: 5042,
     rpc: "https://rpc.mainnet.arc.io",
     explorer: "https://explorer.arc.io",
-    ajo: "0x0000000000000000000000000000000000000000",
-    deployBlock: 0,
+    ajo: "0x155693f3b34feeb510979eb31380102f735cabcf",
+    deployBlock: 23855745,
   },
 };
